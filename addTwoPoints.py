@@ -8,22 +8,34 @@ def addTwoPoints(powX, powY, a, modBy, x1, y1, x2, y2):
         #Calculating Lambda
         ld_temp_up = (powX*(x1**(powX-1))+a)
         ld_temp_down = (powY*(y1**(powY-1)))
-        #check if ld_temp_up divides ld_temp_down
-        if (ld_temp_up % ld_temp_down == 0):
-            flag = 0
-            ld_temp = ld_temp_up/ld_temp_down
-            #print("The ld_temp from case 1 is:"+str(ld_temp))
+        ld_flag = 0
+        if ld_temp_up == 0:
+            ld_flag = 1
+        
+        elif ld_temp_down == 0:
+            return 0,0
+
         else:
-            flag = 1
-            #Converting to intType bcoz Fraction() doesn't accept float values
-            ld_temp_up = int(fmod(ld_temp_up, modBy))
-            ld_temp_down = int(fmod(ld_temp_down, modBy))
-            #Converting into rational number
-            ld_temp = Fraction(ld_temp_up, ld_temp_down)
-            #print("The ld_temp from case 2 is:"+str(ld_temp))
+            #check if ld_temp_up divides ld_temp_down
+            if (ld_temp_up % ld_temp_down == 0):
+                flag = 0
+                ld_temp = ld_temp_up/ld_temp_down
+                #print("The ld_temp from case 1 is:"+str(ld_temp))
+            else:
+                flag = 1
+                #Converting to intType bcoz Fraction() doesn't accept float values
+                ld_temp_up = int(fmod(ld_temp_up, modBy))
+                ld_temp_down = int(fmod(ld_temp_down, modBy))
+                #Converting into rational number
+                ld_temp = Fraction(ld_temp_up, ld_temp_down)
+                #print("The ld_temp from case 2 is:"+str(ld_temp))
         
         #print("The ld_temp to be sent is:"+str(ld_temp))
-        ld = findMod(ld_temp, modBy, flag)
+        if ld_flag == 1:
+            ld = 0
+        else:
+            ld = findMod(ld_temp, modBy, flag)
+        print("The Slope or Lambda is: ",ld)
         #print("The Lambda is: "+str(ld))
 
         #calculating the xNew and yNew
@@ -38,22 +50,42 @@ def addTwoPoints(powX, powY, a, modBy, x1, y1, x2, y2):
         ld_temp_up = (y2 - y1)
         ld_temp_down = (x2 - x1)
 
-        if (ld_temp_up % ld_temp_down == 0):
-            flag = 0
-            ld_temp = ld_temp_up/ld_temp_down
-            #print("The ld_temp from case 1 is:"+str(ld_temp))
+        print(ld_temp_up, ld_temp_down)
+
+        if ld_temp_up < 0 and ld_temp_down < 0:
+            ld_temp_up = abs(ld_temp_up)
+            ld_temp_down = abs(ld_temp_down)
+
+        print(ld_temp_up, ld_temp_down)
+
+        ld_flag_two = 0
+
+        if ld_temp_up == 0:
+            ld_flag_two = 1
+
+        elif ld_temp_down == 0:
+            return 0,0
+
         else:
-            flag = 1
-            ld_temp_up = int(fmod(ld_temp_up, modBy))
-            #print("ld_temp_up: "+str(ld_temp_up))
-            ld_temp_down = int(fmod(ld_temp_down, modBy))
-            #print("ld_temp_down: "+str(ld_temp_down))
-            ld_temp = Fraction(ld_temp_up, ld_temp_down)
-            #print("The ld_temp from case 2 is:"+str(ld_temp))
+            if (ld_temp_up % ld_temp_down == 0):
+                flag = 0
+                ld_temp = ld_temp_up/ld_temp_down
+                #print("The ld_temp from case 1 is:"+str(ld_temp))
+            else:
+                flag = 1
+                ld_temp_up = int(fmod(ld_temp_up, modBy))
+                #print("ld_temp_up: "+str(ld_temp_up))
+                ld_temp_down = int(fmod(ld_temp_down, modBy))
+                #print("ld_temp_down: "+str(ld_temp_down))
+                ld_temp = Fraction(ld_temp_up, ld_temp_down)
+                #print("The ld_temp from case 2 is:"+str(ld_temp))
         
         #print("The ld_temp to be sent is:"+str(ld_temp))
-        ld = findMod(ld_temp, modBy, flag)
-        #print("x1 != x2 The Lambda is: "+str(ld))
+        if ld_flag_two == 1:
+            ld = 0
+        else:
+            ld = findMod(ld_temp, modBy, flag)
+        print("x1 != x2 The Lambda is: "+str(ld))
         xNew = (ld**2) - x1 -x2
         xNew = findMod(xNew, modBy, flag=0)
         yNew = ld*(x1 - xNew) - y1

@@ -8,6 +8,7 @@ from primitiveRootsPro import proots
 from SolveQR import qr
 from millerRabin import millerRabinfunc
 from fermatTest import fermatTest
+from checkOrderOfPointOnEC import copoec
 
 if __name__ == "__main__":
     print("1. ADDITION TWO POINTS\n2. nPs\n3. Finding all the possible points (x,y) on a EC \
@@ -18,12 +19,16 @@ if __name__ == "__main__":
         \n8. Quadratic Residue\
         \n9. Miller Rabin Test\
         \n10. Fermat Primality Test\
+        \n11. Find Order of a Point on an EC\
         \n\nEnter your choice: ")
     choice = int(input())
     #1 goes to def addTwoPoints
     if(choice == 1):
         print("----------------------------------------------------")
         print("Performing addition of two points:")
+        print("----------------------------------------------------")
+        print("----------------------------------------------------")
+        print("ATTENTION: Will not work if A = 0 !!!")
         print("----------------------------------------------------")
         powX = int(input("Power of X "))
         powY = int(input("Power of Y "))
@@ -50,6 +55,9 @@ if __name__ == "__main__":
         print("----------------------------------------------------")
         print("Calculating the nPs:")
         print("----------------------------------------------------")
+        print("----------------------------------------------------")
+        print("ATTENTION: Will not work if A = 0 !!!")
+        print("----------------------------------------------------")
         n = int(input("Enter the value of n:"))
         powX = int(input("Power of X: "))
         powY = int(input("Power of Y: "))
@@ -65,7 +73,9 @@ if __name__ == "__main__":
         print("----------------------------------------------------")
         print("Finding all the points on a EC:")
         print("----------------------------------------------------")
-        print(psFinder(), ", infinity")
+        points = psFinder()
+        print(points, ", infinity")
+        print("And the Order of the EC is: ",len(points)+1)
 
     elif(choice == 4):
         print("----------------------------------------------------")
@@ -109,5 +119,15 @@ if __name__ == "__main__":
         print("----------------------------------------------------")
         fermatTest()
 
+    elif(choice == 11):
+        powX = int(input("Power of X: "))
+        powY = int(input("Power of Y: "))
+        a = int(input('A: '))
+        modBy = int(input("Mod By: "))
+        x1 = int(input('x1: '))
+        y1 = int(input('y1: '))
+        copoec(powX, powY, a, modBy, x1, y1)
+
     else:
         print("Please enter a Valid Choice!!")
+    
